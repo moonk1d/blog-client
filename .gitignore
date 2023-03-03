@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!blog-api.yaml
+!pom.xml
+!README.MD

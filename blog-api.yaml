@@ -1,0 +1,668 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- description: Generated server url
+  url: http://localhost:8090/blog
+paths:
+  /users:
+    get:
+      operationId: getUsers
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+        style: form
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDTOUserInfo'
+          description: OK
+      tags:
+      - user-controller
+      x-accepts: application/json
+    post:
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+        required: true
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+          description: Created
+      tags:
+      - user-controller
+      x-content-type: application/json
+      x-accepts: application/json
+  /tags:
+    get:
+      operationId: getTags
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+        style: form
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDTOTagDto'
+          description: OK
+      tags:
+      - tag-controller
+      x-accepts: application/json
+    post:
+      operationId: createTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagDto'
+        required: true
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDto'
+          description: Created
+      tags:
+      - tag-controller
+      x-content-type: application/json
+      x-accepts: application/json
+  /posts:
+    get:
+      operationId: getPosts
+      parameters:
+      - explode: true
+        in: query
+        name: pageable
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+        style: form
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDTOBlogPostDto'
+          description: OK
+      tags:
+      - blog-post-controller
+      x-accepts: application/json
+    post:
+      operationId: createPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogPostDto'
+        required: true
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPostInfo'
+          description: Created
+      tags:
+      - blog-post-controller
+      x-content-type: application/json
+      x-accepts: application/json
+  /users/{id}:
+    delete:
+      operationId: deleteUser
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "204":
+          description: No Content
+      tags:
+      - user-controller
+      x-accepts: '*/*'
+    get:
+      operationId: getUserDetails
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+          description: OK
+      tags:
+      - user-controller
+      x-accepts: application/json
+  /users/{id}/posts:
+    get:
+      operationId: getUserPosts
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/BlogPostInfo'
+                type: array
+          description: OK
+      tags:
+      - user-controller
+      x-accepts: application/json
+  /tags/{id}:
+    delete:
+      operationId: deleteTag
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "204":
+          description: No Content
+      tags:
+      - tag-controller
+      x-accepts: '*/*'
+    get:
+      operationId: getTagDetails
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDto'
+          description: OK
+      tags:
+      - tag-controller
+      x-accepts: application/json
+  /tags/{id}/posts:
+    get:
+      operationId: getPostsForTag
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/BlogPostDto'
+                type: array
+          description: OK
+      tags:
+      - tag-controller
+      x-accepts: application/json
+  /posts/{id}:
+    delete:
+      operationId: deletePost
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "204":
+          description: No Content
+      tags:
+      - blog-post-controller
+      x-accepts: '*/*'
+    get:
+      operationId: getPostDetails
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not Found
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPostDto'
+          description: OK
+      tags:
+      - blog-post-controller
+      x-accepts: application/json
+components:
+  schemas:
+    ErrorResponse:
+      properties:
+        message:
+          items:
+            type: string
+          type: array
+      type: object
+    UserInfo:
+      example:
+        nickName: nickName
+        name: name
+        id: 0
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+        nickName:
+          type: string
+      type: object
+    TagDto:
+      example:
+        name: name
+        id: 0
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+      type: object
+    BlogPostDto:
+      example:
+        subject: subject
+        author:
+          nickName: nickName
+          name: name
+          id: 0
+        id: 0
+        body: body
+        tags:
+        - tags
+        - tags
+      properties:
+        id:
+          format: int64
+          type: integer
+        subject:
+          type: string
+        body:
+          type: string
+        author:
+          $ref: '#/components/schemas/UserInfo'
+        tags:
+          items:
+            type: string
+          type: array
+      required:
+      - author
+      - body
+      - subject
+      type: object
+    BlogPostInfo:
+      example:
+        subject: subject
+        id: 0
+        body: body
+        tags:
+        - tags
+        - tags
+      properties:
+        id:
+          format: int64
+          type: integer
+        subject:
+          type: string
+        body:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Pageable:
+      properties:
+        page:
+          format: int32
+          minimum: 0
+          type: integer
+        size:
+          format: int32
+          minimum: 1
+          type: integer
+        sort:
+          items:
+            type: string
+          type: array
+      type: object
+    PageDTOUserInfo:
+      example:
+        size: 6
+        totalPages: 5
+        page: 1
+        content:
+        - nickName: nickName
+          name: name
+          id: 0
+        - nickName: nickName
+          name: name
+          id: 0
+        totalElements: 5
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/UserInfo'
+          type: array
+        size:
+          format: int32
+          type: integer
+        page:
+          format: int32
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+        totalElements:
+          format: int64
+          type: integer
+      type: object
+    PageDTOTagDto:
+      example:
+        size: 6
+        totalPages: 5
+        page: 1
+        content:
+        - name: name
+          id: 0
+        - name: name
+          id: 0
+        totalElements: 5
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/TagDto'
+          type: array
+        size:
+          format: int32
+          type: integer
+        page:
+          format: int32
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+        totalElements:
+          format: int64
+          type: integer
+      type: object
+    PageDTOBlogPostDto:
+      example:
+        size: 6
+        totalPages: 5
+        page: 1
+        content:
+        - subject: subject
+          author:
+            nickName: nickName
+            name: name
+            id: 0
+          id: 0
+          body: body
+          tags:
+          - tags
+          - tags
+        - subject: subject
+          author:
+            nickName: nickName
+            name: name
+            id: 0
+          id: 0
+          body: body
+          tags:
+          - tags
+          - tags
+        totalElements: 5
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/BlogPostDto'
+          type: array
+        size:
+          format: int32
+          type: integer
+        page:
+          format: int32
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+        totalElements:
+          format: int64
+          type: integer
+      type: object
+

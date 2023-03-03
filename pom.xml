@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nazarov.projects</groupId>
+    <artifactId>blog-client</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>blog</name>
+    <description>Client for Blog demo project for Spring Boot</description>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <openapi.generator.version>6.2.0</openapi.generator.version>
+        <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
+
+        <restassured.version>5.3.0</restassured.version>
+        <swagger-annotations.version>1.6.8</swagger-annotations.version>
+        <jackson-core.version>2.14.0</jackson-core.version>
+        <javax.annotation.api>1.3.2</javax.annotation.api>
+        <findbugs.version>3.0.2</findbugs.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${restassured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>${javax.annotation.api}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${findbugs.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven-clean-plugin.version}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>.</directory>
+                            <excludes>
+                                <exclude>pom.xml</exclude>
+                                <exclude>blog-api.yaml</exclude>
+                                <exclude>.gitignore</exclude>
+                                <exclude>README.MD</exclude>
+                            </excludes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi.generator.version}</version>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/blog-api.yaml</inputSpec>
+
+                            <generatorName>java</generatorName>
+                            <library>rest-assured</library>
+                            <configOptions>
+                                <serializationLibrary>jackson</serializationLibrary>
+                                <java8>true</java8>
+                            </configOptions>
+
+                            <apiPackage>com.nazarov.projects.blog.api</apiPackage>
+                            <modelPackage>com.nazarov.projects.blog.model</modelPackage>
+                            <apiNameSuffix>BlogApi</apiNameSuffix>
+
+                            <generateModels>true</generateModels>
+                            <generateApiDocumentation>true</generateApiDocumentation>
+                            <generateModelTests>false</generateModelTests>
+
+                            <generateApis>true</generateApis>
+                            <generateApiTests>false</generateApiTests>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <supportingFilesToGenerate>Oper.java,JSON.java</supportingFilesToGenerate>
+
+                            <modelNameSuffix>DTO</modelNameSuffix>
+
+                            <skipValidateSpec>true</skipValidateSpec>
+
+                            <verbose>false</verbose>
+                            <skipIfSpecIsUnchanged>false</skipIfSpecIsUnchanged>
+
+                            <output>${project.basedir}</output>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
